@@ -4,6 +4,13 @@ from django.db import models
 
 
 class Company(models.Model):
+    """
+    企業モデル
+
+    カテゴリが属する企業情報を管理するモデル。
+    各カテゴリは必ず1つの企業に属し、同一企業内でカテゴリ名の一意性が保証されます。
+    """
+
     id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False, db_comment="企業ID")
     name = models.CharField(max_length=255, db_comment="企業名")
     created_at = models.DateTimeField(auto_now_add=True, db_comment="作成日時")
@@ -14,3 +21,7 @@ class Company(models.Model):
         db_table_comment = "企業テーブル"
         verbose_name = "company"
         verbose_name_plural = "companies"
+
+    def __str__(self) -> str:
+        """企業の文字列表現を返す"""
+        return self.name
